@@ -1,0 +1,90 @@
+import java.util.Scanner;
+
+class matrix {
+    int rows, cols;
+    int arr[][];
+
+    matrix(int r, int c) {
+        rows = r;
+        cols = c;
+        arr = new int[rows][cols];
+    }
+
+    void readMatrix() {
+        int i, j;
+        Scanner s = new Scanner(System.in);
+        for (i = 0; i < rows; i++) {
+            for (j = 0; j < cols; j++) {
+                arr[i][j] = s.nextInt();
+            }
+        }
+    }
+
+    void displayMatrix() {
+        int i, j;
+        for (i = 0; i < rows; i++) {
+            for (j = 0; j < cols; j++) {
+                System.out.print(arr[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    void sum(matrix m) {
+        if (rows == m.rows && cols == m.cols) {
+            matrix sum = new matrix(rows, cols);
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    sum.arr[i][j] = arr[i][j] + m.arr[i][j];
+                }
+            }
+            System.out.println("Sum is:");
+            sum.displayMatrix();
+        } else {
+            System.out.println("Operation cannot be performed. Matrices must have the same dimensions.");
+        }
+    }
+
+    void product(matrix m) {
+        if (cols == m.rows) {
+            matrix product = new matrix(rows, m.cols);
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < m.cols; j++) {
+                    int productSum = 0;
+                    for (int k = 0; k < cols; k++) {
+                        productSum += arr[i][k] * m.arr[k][j];
+                    }
+                    product.arr[i][j] = productSum;
+                }
+            }
+            System.out.println("Product is:");
+            product.displayMatrix();
+        } else {
+            System.out.println("Operation cannot be performed. Number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+        }
+    }
+}
+
+class matrixdemo{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of rows of matrix: ");
+        int r = scanner.nextInt();
+        System.out.print("Enter the number of columns of matrix: ");
+        int c = scanner.nextInt();
+
+        matrix m1 = new matrix(r, c);
+        System.out.println("Enter values for the first  matrix:");
+        m1.readMatrix();
+
+        matrix m2 = new matrix(r, c);
+        System.out.println("Enter values for the second matrix:");
+        m2.readMatrix();
+
+        m1.sum(m2);
+        m1.product(m2);
+    }
+}
+
+
